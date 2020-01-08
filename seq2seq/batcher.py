@@ -191,7 +191,7 @@ def example_generator(params, vocab, max_enc_len, max_dec_len, mode):
 
 def batch_generator(generator, params, vocab, max_enc_len, max_dec_len, batch_size, mode):
     dataset = tf.data.Dataset.from_generator(
-        lambda: generator(params, vocab, max_enc_len, max_dec_len, mode),
+            lambda: generator(params, vocab, max_enc_len, max_dec_len, mode),
         output_types={
             "enc_len": tf.int32,
             "enc_input": tf.int32,
@@ -220,7 +220,7 @@ def batch_generator(generator, params, vocab, max_enc_len, max_dec_len, batch_si
             "decoder_pad_mask": [None],
             "encoder_pad_mask": [None]
         })
-
+    drop = True if mode == 'train' else 'False'
     dataset = dataset.padded_batch(batch_size,
                                    padded_shapes=({"enc_len": [],
                                                    "enc_input": [None],
@@ -248,7 +248,7 @@ def batch_generator(generator, params, vocab, max_enc_len, max_dec_len, batch_si
                                                    "decoder_pad_mask": 0,
                                                    "encoder_pad_mask": 0
                                                    },
-                                   drop_remainder=True)
+                                   drop_remainder=drop)
 
     def update(entry):
         return ({"enc_input": entry["enc_input"],

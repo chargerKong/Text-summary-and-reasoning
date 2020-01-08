@@ -20,7 +20,7 @@ def test(params):
     # test_data = load_test_data(params['max_enc_len'])
     test_data = batcher(vo, params)
     # predict test data using beam search
-    results = model.model_predict(test_data)
+    results = model.model_predict(test_data)[:20000]
 
     # save the predictions
     model.save_predict_csv(results)
