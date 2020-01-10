@@ -39,7 +39,7 @@ def test(model, params):
 if __name__ == '__main__':
 
     params = {}
-    params["max_enc_len"] = 200
+    params["max_enc_len"] = 300
     params["max_dec_len"] = 41
     params["batch_size"] = 32
     params["epochs"] = 4

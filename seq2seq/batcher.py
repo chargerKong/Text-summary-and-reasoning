@@ -220,7 +220,7 @@ def batch_generator(generator, params, vocab, max_enc_len, max_dec_len, batch_si
             "decoder_pad_mask": [None],
             "encoder_pad_mask": [None]
         })
-    drop = True if mode == 'train' else 'False'
+    drop = True if mode == 'train' else False
     dataset = dataset.padded_batch(batch_size,
                                    padded_shapes=({"enc_len": [],
                                                    "enc_input": [None],

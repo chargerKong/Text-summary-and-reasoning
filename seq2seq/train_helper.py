@@ -8,8 +8,13 @@ def train_model(model, vocab, params, checkpoint_manager):
 
     optimizer = tf.keras.optimizers.Adam(name='Adam', learning_rate=0.001)
 
-
-    #@tf.function
+    @tf.function(input_signature=(tf.TensorSpec(shape=[params["batch_size"], None], dtype=tf.int32),
+                                  tf.TensorSpec(shape=[params["batch_size"], None], dtype=tf.int32),
+                                  tf.TensorSpec(shape=[], dtype=tf.int32),
+                                  tf.TensorSpec(shape=[params["batch_size"], params["max_dec_len"]], dtype=tf.int32),
+                                  tf.TensorSpec(shape=[params["batch_size"], params["max_dec_len"]], dtype=tf.int32),
+                                  tf.TensorSpec(shape=[params["batch_size"], None], dtype=tf.int32),
+                                  tf.TensorSpec(shape=[params["batch_size"], None], dtype=tf.int32)))
     def train_step(enc_input, extended_enc_input,max_oov_len, dec_input,dec_target, enc_pad_mask, padding_mask):
 
 
@@ -44,8 +49,7 @@ def train_model(model, vocab, params, checkpoint_manager):
         total_loss = 0
         step = 0
         for encoder_batch_data, decoder_batch_data in dataset:
-            import pdb
-            pdb.set_trace()
+
             batch_loss, log_loss, coverage_loss = train_step(encoder_batch_data["enc_input"],
                                     encoder_batch_data["extended_enc_input"],
                                     encoder_batch_data["max_oov_len"],

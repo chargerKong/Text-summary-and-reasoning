@@ -75,7 +75,6 @@ class Seq2Seq(tf.keras.Model):
         fina_dist = _calc_final_dist(batch_extend_vocab, predictions, attentions, p_gens, batch_oov_len,
                                      self.params['vocab_size'], self.params['batch_size'])
 
-
         # [(32,80000),(32,80000),...m(32,80000),] lens of 33  --> 32 33 80000
         return tf.stack(fina_dist, 1), dec_hidden, coverage, attentions
 
